@@ -1,10 +1,11 @@
 import { FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
+import { RootState } from '../redux/store';
 
 export default function Header() {
-  // const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ export default function Header() {
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to='/'>
           <h1 className='font-bold text-sm sm:text-xl flex flex-wrap'>
-            <span className='text-slate-500'>Sahand</span>
+            <span className='text-slate-500'>Mohit</span>
             <span className='text-slate-700'>Estate</span>
           </h1>
         </Link>
@@ -59,7 +60,7 @@ export default function Header() {
               About
             </li>
           </Link>
-          {/* <Link to='/profile'>
+          <Link to='/profile'>
             {currentUser ? (
               <img
                 className='rounded-full h-7 w-7 object-cover'
@@ -69,7 +70,7 @@ export default function Header() {
             ) : (
               <li className=' text-slate-700 hover:underline'> Sign in</li>
             )}
-          </Link> */}
+          </Link>
         </ul>
       </div>
     </header>

@@ -90,6 +90,7 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err) => {
+          console.log(err);
           setImageUploadError('Image upload failed (2 mb max per image)');
           setUploading(false);
           
@@ -133,7 +134,7 @@ export default function CreateListing() {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value, type, checked } = e.target;
+    const { id, value, type, checked } = e.target as HTMLInputElement;
     if (id === 'sale' || id === 'rent') {
       setFormData({
         ...formData,
@@ -180,8 +181,8 @@ export default function CreateListing() {
         setError(data.message);
       }
       navigate(`/listing/${data._id}`);
-    } catch (error) {
-      setError(error.message);
+    } catch (error : unknown) {
+      setError(error as string);
       setLoading(false);
     }
   };

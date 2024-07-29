@@ -32,9 +32,7 @@ interface ListingData {
   userRef: string;
 }
 
-interface Params {
-  listingId: string;
-}
+type Params = Record<string, string | undefined>;
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -46,7 +44,7 @@ export default function Listing() {
   const params = useParams<Params>();
   const { currentUser } = useSelector((state: RootState) => state.user);
 
-  console.log(currentUser, listing.userRef , "currentUser");
+  // console.log(currentUser, listing.userRef , "currentUser");
   
   useEffect(() => {
     const fetchListing = async () => {

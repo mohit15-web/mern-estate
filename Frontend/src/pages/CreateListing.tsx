@@ -9,6 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../redux/store'; // Adjust the import according to your store setup
+import { toast } from 'react-toastify';
 
 interface ListingFormData {
   imageUrls: string[];
@@ -74,6 +75,8 @@ export default function CreateListing() {
           setUploading(false);
         })
         .catch((err : unknown) => {
+          console.log(err);
+          
           setImageUploadError('Image upload failed (2 MB max per image)');
           setUploading(false);
         });
@@ -117,7 +120,7 @@ export default function CreateListing() {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value, type, checked } = e.target;
+    const { id, value, type , checked } = e.target as HTMLInputElement;
 
     if (id === 'sale' || id === 'rent') {
       setFormData((prevFormData) => ({
@@ -138,7 +141,17 @@ export default function CreateListing() {
   };
 
   const handleSubmit = async (e: FormEvent) => {
+    // console.log("inside create listing");
+    
     e.preventDefault();
+
+    if (!currentUser) {
+      toast.error('You must be logged in to create a listing', {
+        position: 'bottom-right',
+        theme: 'colored',
+      });
+      return;
+    }
     try {
       if (formData.imageUrls.length < 1)
         return setError('You must upload at least one image');
@@ -162,14 +175,27 @@ export default function CreateListing() {
       const data = await res.json();
       setLoading(false);
 
+
       if (data.success === false) {
         setError(data.message);
+        toast.error(data.message, {
+          position: 'bottom-right',
+          theme: 'colored',
+        })
       } else {
+        toast.success('Listing created successfully', {
+          position: 'bottom-right',
+          theme: 'colored',
+        })
         navigate(`/listing/${data._id}`);
       }
     } catch (error) {
       setError((error as Error).message);
       setLoading(false);
+      toast.error( (error as Error).message, {
+        position: 'bottom-right',
+        theme: 'colored',
+      })
     }
   };
 

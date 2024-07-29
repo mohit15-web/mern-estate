@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { version } from 'mongoose';
 
 const listingSchema = new mongoose.Schema(
   {
@@ -55,7 +55,8 @@ const listingSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  // { timestamps: true }
+  {versionKey: false}
 );
 
 const Listing = mongoose.model('Listing', listingSchema);

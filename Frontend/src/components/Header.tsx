@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { RootState } from '../redux/store';
-
+import user from '../assets/user.jpg';
 export default function Header() {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -64,7 +64,7 @@ export default function Header() {
             {currentUser ? (
               <img
                 className='rounded-full h-7 w-7 object-cover'
-                src={currentUser.avatar}
+                src={currentUser.avatar || user}
                 alt='profile'
               />
             ) : (

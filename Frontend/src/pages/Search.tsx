@@ -59,7 +59,7 @@ export default function Search() {
       setShowMore(false);
       const searchQuery = urlParams.toString();
       try {
-        const res = await fetch(`/api/listing/get?${searchQuery}`);
+        const res = await fetch(`${process.env.VITE_BASE_URL}/api/listing/get?${searchQuery}`);
         const data = await res.json();
         if (data.length > 8) {
           setShowMore(true);

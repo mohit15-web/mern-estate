@@ -186,8 +186,7 @@ export default function Profile() {
         setShowListingsError(true);
         return;
       }
-      console.log(data , "data");
-      
+      console.log(data, "data");
 
       setUserListings(data);
     } catch (error) {
@@ -197,9 +196,12 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId: string) => {
     try {
-      const res = await fetch(`${process.env.VITE_BASE_URL}/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);

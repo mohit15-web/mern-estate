@@ -1,5 +1,5 @@
-import { useEffect, useState, ChangeEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState, ChangeEvent } from "react";
+import { Link } from "react-router-dom";
 
 interface ContactProps {
   listing: {
@@ -15,8 +15,8 @@ interface LandlordData {
 
 export default function Contact({ listing }: ContactProps) {
   const [landlord, setLandlord] = useState<LandlordData | null>(null);
-  const [message, setMessage] = useState('');
-  
+  const [message, setMessage] = useState("");
+
   const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
@@ -24,7 +24,9 @@ export default function Contact({ listing }: ContactProps) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`${process.env.VITE_BASE_URL}/api/user/${listing.userRef}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/user/${listing.userRef}`
+        );
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
@@ -37,25 +39,25 @@ export default function Contact({ listing }: ContactProps) {
   return (
     <>
       {landlord && (
-        <div className='flex flex-col gap-2'>
+        <div className="flex flex-col gap-2">
           <p>
-            Contact <span className='font-semibold'>{landlord.username}</span>{' '}
-            for{' '}
-            <span className='font-semibold'>{listing.name.toLowerCase()}</span>
+            Contact <span className="font-semibold">{landlord.username}</span>{" "}
+            for{" "}
+            <span className="font-semibold">{listing.name.toLowerCase()}</span>
           </p>
           <textarea
-            name='message'
-            id='message'
+            name="message"
+            id="message"
             rows={2}
             value={message}
             onChange={onChange}
-            placeholder='Enter your message here...'
-            className='w-full border p-3 rounded-lg'
+            placeholder="Enter your message here..."
+            className="w-full border p-3 rounded-lg"
           ></textarea>
 
           <Link
             to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
-            className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
+            className="bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95"
           >
             Send Message
           </Link>

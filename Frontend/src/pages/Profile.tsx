@@ -35,7 +35,7 @@ interface Listing {
 
 export default function Profile() {
   const fileRef = useRef<HTMLInputElement>(null);
-  const { currentUser, loading, error } = useSelector(
+  const { currentUser, loading } = useSelector(
     (state: RootState) => state.user
   );
   console.log(currentUser, "currentUser");
@@ -183,6 +183,10 @@ export default function Profile() {
       const res = await fetch(`/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
+        toast.error(data.message, {
+          position: "bottom-right",
+          theme: "colored",
+        })
         setShowListingsError(true);
         return;
       }
@@ -190,6 +194,10 @@ export default function Profile() {
 
       setUserListings(data);
     } catch (error) {
+      toast.error("Failed to fetch listings", {
+        position: "bottom-right",
+        theme: "colored",
+      })
       setShowListingsError(true);
     }
   };
@@ -302,7 +310,7 @@ export default function Profile() {
         </span>
       </div>
 
-      <p className="text-red-700 mt-5">{error ? error : ""}</p>
+      {/* <p className="text-red-700 mt-5">{error ? error : ""}</p> */}
       <p className="text-green-700 my-5">
         {updateSuccess ? "User is updated successfully!" : ""}
       </p>

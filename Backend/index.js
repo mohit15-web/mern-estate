@@ -8,7 +8,7 @@ import cors from "cors";
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:5173','https://mern-estate-rosy.vercel.app' ], // Replace with your client's origin
+  origin: ['http://localhost:5173','https://mern-estate-mu.vercel.app' ], // Replace with your client's origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,

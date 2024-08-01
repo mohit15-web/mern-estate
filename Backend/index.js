@@ -7,16 +7,33 @@ import listingRouter from "./routes/listing.route.js";
 import cors from "cors";
 const app = express();
 
+// const corsOptions = {
+//   origin: ['http://localhost:5173','https://mern-estate-mu.vercel.app' ], // Replace with your client's origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+// };
+
+const allowedOrigins = [
+  'http://localhost:5173'
+  // process.env.CORS_ORIGIN
+];
+
+// CORS options
 const corsOptions = {
-  origin: ['http://localhost:5173','https://mern-estate-mu.vercel.app' ], // Replace with your client's origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 };
-
 app.use(cors(corsOptions));
-
+app.options("*", cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);

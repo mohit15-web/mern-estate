@@ -20,6 +20,7 @@ export const signup = async (req, res, next) => {
 };
 
 export const signin = async (req, res, next) => {
+
   const { email, password } = req.body;
   try {
     const validUser = await userModel.findOne({ email });
@@ -32,9 +33,12 @@ export const signin = async (req, res, next) => {
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
 
+    console.log(token);
     const { password: pass, ...rest } = validUser._doc;
     res
-      .cookie("access_token", token, { httpOnly: true })
+      .cookie("access_token", token, {
+        httpOnly: true, 
+      })
       .status(200)
       .json(rest);
   } catch (error) {
@@ -45,6 +49,7 @@ export const signin = async (req, res, next) => {
 export const google = async (req, res, next) => {
   try {
     const user = await userModel.findOne({ email: req.body.email });
+    console.log(user , "user");
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;

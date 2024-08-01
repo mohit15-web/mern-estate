@@ -33,6 +33,7 @@ export const updateUser = async (req, res, next) => {
 };
 
 export const deleteUser = async (req, res, next) => {
+  
   if (req.user.id !== req.params.id)
     return next(errorHandler(401, 'You can only delete your own account!'));
   try {
@@ -45,17 +46,29 @@ export const deleteUser = async (req, res, next) => {
 };
 
 export const getUserListings = async (req, res, next) => {
-  if (req.user.id === req.params.id) {
-    try {
-      const listings = await Listing.find({ userRef: req.params.id });
-      res.status(200).json(listings);
-    } catch (error) {
-      next(error);
-    }
-  } else {
+  // Ensure that req.user and req.params.id exist
+  // console.log("inside function");
+  console.log("req.user", req.user);
+  if (!req.user || !req.params.id) {
+    return next(errorHandler(400, 'Invalid request'));
+  }
+
+  // Check if the user is authorized to view the listings
+  console.log("req.params.id", req.params.id);
+  console.log("req.user.id", req.user.id);
+
+  if (req.user.id !== req.params.id) {
     return next(errorHandler(401, 'You can only view your own listings!'));
   }
+
+  try {
+    const listings = await Listing.find({ userRef: req.params.id });
+    res.status(200).json({ success: true, listings });
+  } catch (error) {
+    next(errorHandler(500, 'Server Error'));
+  }
 };
+
 
 export const getUser = async (req, res, next) => {
   try {

@@ -94,6 +94,7 @@ export default function Profile() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -177,30 +178,37 @@ export default function Profile() {
   };
 
   const handleShowListings = async () => {
+    console.log("inside func");
+    console.log(currentUser, "currentUser");
+    
     try {
       if (!currentUser) return;
       setShowListingsError(false);
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/listings/${currentUser._id}`,{
+        method: "GET",
+        credentials: "include",
+      });
       const data = await res.json();
-      if (data.success === false) {
-        toast.error(data.message, {
+      if (!res.ok || data.success === false) {
+        toast.error(data.message || 'Failed to fetch listings', {
           position: "bottom-right",
           theme: "colored",
-        })
+        });
         setShowListingsError(true);
         return;
       }
       console.log(data, "data");
-
-      setUserListings(data);
+  
+      setUserListings(data.listings);
     } catch (error) {
       toast.error("Failed to fetch listings", {
         position: "bottom-right",
         theme: "colored",
-      })
+      });
       setShowListingsError(true);
     }
   };
+  
 
   const handleListingDelete = async (listingId: string) => {
     try {

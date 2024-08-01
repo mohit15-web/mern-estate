@@ -85,9 +85,16 @@ export const google = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
-    res.clearCookie("access_token");
+    // Clear the cookie with the same options as it was set
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Ensure this matches how you set the cookie
+      sameSite: "strict", // Ensure this matches how you set the cookie
+      path: "/", // Ensure this matches the path where the cookie was set
+    });
     res.status(200).json("User has been logged out!");
   } catch (error) {
     next(error);
   }
 };
+

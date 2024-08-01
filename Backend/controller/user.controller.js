@@ -52,11 +52,7 @@ export const getUserListings = async (req, res, next) => {
   if (!req.user || !req.params.id) {
     return next(errorHandler(400, 'Invalid request'));
   }
-
-  // Check if the user is authorized to view the listings
-  console.log("req.params.id", req.params.id);
-  console.log("req.user.id", req.user.id);
-
+  
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, 'You can only view your own listings!'));
   }

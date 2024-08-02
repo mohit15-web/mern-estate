@@ -50,3 +50,11 @@ BrokerClone is a full-stack application built with the MERN (MongoDB, Express.js
 
    ```bash
    git clone https://github.com/yourusername/BrokerClone.git
+
+
+## Screenshots
+
+![Login](./Frontend/public/Screenshot%20(958).png)
+![Homepage](./Frontend/public/Screenshot%20(955).png)
+![Search](./Frontend/public/Screenshot%20(956).png)
+![Profile](./Frontend/public/Screenshot%20(957).png)

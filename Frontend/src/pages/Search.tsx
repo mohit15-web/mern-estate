@@ -221,10 +221,10 @@ export default function Search() {
               name="sort"
               className="border rounded-lg p-3"
             >
-              <option value="regularPrice_desc">Price high to low</option>
-              <option value="regularPrice_asc">Price low to high</option>
-              <option value="created_at_desc">Latest</option>
-              <option value="created_at_asc">Oldest</option>
+              <option value="DESC">Price high to low</option>
+              <option value="ASC">Price low to high</option>
+              {/* <option value="created_at_desc">Latest</option>
+              <option value="created_at_asc">Oldest</option> */}
             </select>
           </div>
 

@@ -63,7 +63,7 @@ export const getListing = async (req, res, next) => {
 };
 
 export const getListings = async (req, res, next) => {
-  // console.log("trigger");
+  console.log(req.query);
   try {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -93,10 +93,11 @@ export const getListings = async (req, res, next) => {
 
     const searchTerm = req.query.searchTerm || '';
 
-    const sort = req.query.sort || 'createdAt';
+    // const sort = req.query.sort || 'createdAt';
 
-    const order = req.query.order || 'desc';
+    const order = req.query.sort === 'DESC' ? -1 : 1;
 
+    console.log(order , "order");
     const listings = await Listing.find({
       name: { $regex: searchTerm, $options: 'i' },
       offer,
@@ -104,7 +105,7 @@ export const getListings = async (req, res, next) => {
       parking,
       type,
     })
-      .sort({ [sort]: order })
+      .sort({regularPrice : order})
       .limit(limit)
       .skip(startIndex);
 

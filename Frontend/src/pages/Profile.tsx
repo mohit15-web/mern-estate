@@ -124,6 +124,7 @@ export default function Profile() {
       dispatch(deleteUserStart());
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/delete/${currentUser._id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
       if (data.success === false) {

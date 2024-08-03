@@ -58,3 +58,7 @@ BrokerClone is a full-stack application built with the MERN (MongoDB, Express.js
 ![Homepage](./Frontend/public/Screenshot%20(955).png)
 ![Search](./Frontend/public/Screenshot%20(956).png)
 ![Profile](./Frontend/public/Screenshot%20(957).png)
+
+## License
+
+- This README file provides all the necessary commands and configuration details in Markdown format. Just replace placeholders with your actual project details

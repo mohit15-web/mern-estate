@@ -220,6 +220,7 @@ export default function Profile() {
         `${import.meta.env.VITE_BASE_URL}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
+        credentials: "include",
         }
       );
       const data = await res.json();
